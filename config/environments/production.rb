@@ -1,0 +1,1 @@
+ENV["REDIS_URL"] = 'redis://:talkingHead@localhost:6379/2'
