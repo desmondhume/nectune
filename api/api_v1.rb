@@ -25,10 +25,6 @@ module Nectune
 
 		resource :user do
 
-			# public APIs
-
-			# public APIs that require the caller to register an application
-
 			desc "Create a User"
 			params do
 				requires :username, :type => String, :desc => 'User username'
@@ -38,32 +34,12 @@ module Nectune
 				user = User.create(username: params[:username], password: params[:password])
 			end
 
-			# OAuth2
-
-			# user is logged into the website with a form
 			desc "Get a User"
-			get '/me' do
-				
-			end
-
 			desc "Update a User"
 			desc "Remove a User"
-			
+
 		end
-		# resource :users do
 
-		# 	desc "Return a User"
-			
-		# 	params do
-		# 		requires :username, :type => String, :desc => "User username."
-		# 	end
-
-		# 	get ':username' do
-		# 		Ohm.connect(:url=>'redis://redistogo:08f68d4e3b7e2a6a5a55405bc63b2e92@squawfish.redistogo.com:9117/')
-		# 		user = User.find(:username => params[:username]).first
-		# 		user.password
-		# 	end
-		# end
 	end
 	
 end
