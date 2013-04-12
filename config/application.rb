@@ -10,7 +10,8 @@ DataMapper.setup(:default, ENV["DATAMAPPER_URL"])
 require File.expand_path('../../models/user.rb', __FILE__)
 
 DataMapper.finalize
-DataMapper.auto_migrate! 
+DataMapper.auto_migrate!
+DataMapper::Model.raise_on_save_failure = true
 
 Dir[File.expand_path('../../api/api_v*.rb', __FILE__)].each do |f|
 	require f

@@ -29,9 +29,16 @@ module Nectune
 			params do
 				requires :username, :type => String, :desc => 'User username'
 				requires :password, :type => String, :desc => 'User password'
+				requires :email, :type => String, :desc => 'User email'
 			end
+
 			post '/' do
-				user = User.create(username: params[:username], password: params[:password])
+				user = User.new(username: params[:username], password: params[:password], email: params[:email])
+				begin
+					user.save
+				rescue DataMapper::SaveFailureError => e
+					error! e.resource.errors.to_hash, 400
+				end
 			end
 
 			desc "Get a User"

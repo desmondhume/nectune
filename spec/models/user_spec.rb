@@ -8,29 +8,48 @@ describe Nectune::API do
 		Nectune::API
 	end
 
-	context 'Protected' do
-		describe User do
+	describe User do
 
-			it "Receive two parameters on post and create a User" do
-				post '/api/user', {username: 'greg', password: 'password'}
-				last_response.status.should == 201
-			end
-
-			it "Return 400 if username is not defined" do
-				post '/api/user', {password: 'password'}
-				last_response.status.should == 400
-			end
-
-			it "Return 400 if password is not defined" do
-				post '/api/user', {username: 'greg'}
-				last_response.status.should == 400
-			end
-
-			it "Return 400 if request contains not valid parameter" do
-				post '/api/user', {username: 'greg', password: 'asdasdasd', foo: 'bar'}
-				last_response.status.should == 400
-			end
+		it "Receive three parameters on post and create a User" do
+			post '/api/user', {username: 'username', password: 'password', email: 'nectune@user.com'}
+			last_response.status.should == 201
 		end
+
+		it "Return 400 if username parameter is missing" do
+			post '/api/user', {password: 'password', email: 'nectune@user.com'}
+			last_response.status.should == 400
+		end
+
+		it "Return 400 if password parameter is missing" do
+			post '/api/user', {username: 'greg', email: 'nectune@user.com'}
+			last_response.status.should == 400
+		end
+
+		it "Return 400 if email parameter is missing" do
+			post '/api/user', {username: 'greg', password: 'password'}
+			last_response.status.should == 400
+		end
+
+		it "Return 400 if request contains unknown parameter" do
+			post '/api/user', {username: 'greg', password: 'asdasdasd', email: 'nectune@user.com', foo: 'bar'}
+			last_response.status.should == 400
+		end
+
+		it "Return 400 if username value is empty" do
+			post '/api/user', {username: '', password: 'asdasdasd', email: 'nectune@user.com'}
+			last_response.status.should == 400
+		end
+
+		it "Return 400 if password value is empty" do
+			post '/api/user', {username: 'greg', password: '', email: 'nectune@user.com'}
+			last_response.status.should == 400
+		end
+
+		it "Return 400 if email value is empty" do
+			post '/api/user', {username: 'greg', password: 'asdasdasd', email: ''}
+			last_response.status.should == 400
+		end
+
 	end
 
 end
